@@ -1,22 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <script
-      src="https://code.jquery.com/jquery-3.6.1.min.js"
-      integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
-      crossorigin="anonymous"
-    ></script>
-  </head>
-  <body>
-    <div>
-      <button id="change">Click!</button>
-    </div>
-  </body>
-  <script>
-    $("#change").on("click", () => {
-      let newColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
-      let p = $("body").css("background-color", newColor);
-    });
-  </script>
+<head>
+    <meta charset="UTF-8">
+    <title>backgrouund</title>
+</head>
+<script>
+    function changeColor() {
+        var col = document.getElementById("body");
+        col.style.backgroundColor = "#" + ((1 << 24) * Math.random() | 0).toString(16).padStart(6, "0");
+    }
+</script>
+<body id='body'>
+    <button onclick="changeColor();" type="button">Click Me</button>
+    </body>
 </html>
