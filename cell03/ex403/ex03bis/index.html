@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TODO List</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        #ft_list {
+            width: 300px;
+            margin: auto;
+            padding: 10px;
+            border: 1px solid #000;
+            min-height: 100px;
+        }
+        #ft_list > div {
+            margin: 10px;
+            background-color: #ff0000;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            color: white;
+            text-align: center;
+        }
+        #ft_list > div:hover {
+            background-color: #ff8c8c;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center">TODO LIST</h1>
+    <div id="ft_list"></div>
+    <button id="newTodo">NEW</button>
+
+    <script>
+        $(document).ready(function() {
+            const ftList = $("#ft_list");
+
+            const loadTodos = () => {
+                let todos = getCookies("todos");
+                if (todos) {
+                    todos = JSON.parse(todos);
+                    todos.forEach(todo => addTodo(todo));
+                }
+            };
+
+            const saveTodos = () => {
+                let todos = [];
+                ftList.children().each(function() {
+                    todos.push($(this).text());
+                });
+                document.cookie = `todos=${JSON.stringify(todos)}; path=/; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
+            };
+
+            const getCookies = (name) => {
+                let cookies = document.cookie.split("; ");
+                for (let cookie of cookies) {
+                    let [key, value] = cookie.split("=");
+                    if (key === name) return value;
+                }
+                return null;
+            };
+
+            const addTodo = (txt) => {
+                let node = $("<div></div>").text(txt);
+                node.click(function() {
+                    if (confirm("Do you want to delete this TODO?")) {
+                        $(this).remove();
+                        saveTodos();
+                    }
+                });
+                ftList.prepend(node);
+            };
+
+            $("#newTodo").click(function() {
+                let txt = prompt("Please enter a new TODO:");
+                if (txt && txt.trim() !== "") {
+                    addTodo(txt);
+                    saveTodos();
+                }
+            });
+
+            loadTodos();
+        });
+    </script>
+</body>
+</html>

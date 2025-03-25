@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>Balloon Game</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+        }
+        #balloon {
+            border-radius: 50%;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 200px;
+            transition: all 0.1s ease;
+            width: 200px;
+            height: 200px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="balloon"></div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            const colors = ["red", "green", "blue"];
+            let colorIndex = 0;
+            let size = 200;
+
+            const updateBalloon = () => {
+                $("#balloon").css({
+                    width: size + "px",
+                    height: size + "px",
+                    backgroundColor: colors[colorIndex]
+                });
+            };
+
+            $("#balloon").on("click", function() {
+                size += 10;
+                if (size > 420) {
+                    size = 200;
+                    colorIndex = 0;
+                } else {
+                    colorIndex = (colorIndex + 1) % colors.length;
+                }
+                updateBalloon();
+            });
+
+            $("#balloon").on("mouseleave", function() {
+                size = Math.max(200, size - 5);
+                colorIndex = (colorIndex - 1 + colors.length) % colors.length;
+                updateBalloon();
+            });
+        });
+    </script>
+</body>
+</html>
