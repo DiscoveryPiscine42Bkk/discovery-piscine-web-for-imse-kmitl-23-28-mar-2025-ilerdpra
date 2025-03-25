@@ -1,16 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
-    <title>backgrouund</title>
+    <title>Background</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        button {
+            font-size: 20px;
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
-<script>
-    function changeColor() {
-        var col = document.getElementById("body");
-        col.style.backgroundColor = "#" + ((1 << 24) * Math.random() | 0).toString(16).padStart(6, "0");
-    }
-</script>
-<body id='body'>
+<body>
     <button onclick="changeColor();" type="button">Click Me</button>
-    </body>
+
+    <script>
+        function changeColor() {
+            document.body.style.backgroundColor = "#" + 
+                Math.floor(Math.random() * 16777215).toString(16).padStart(6, "0");
+        }
+    </script>
+</body>
 </html>
